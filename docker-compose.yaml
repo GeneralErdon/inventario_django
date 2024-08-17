@@ -1,0 +1,62 @@
+services:
+#? ===========================app Services==========================================
+  #* app Service
+  inventory_app:
+    container_name: inventory_app
+    image: inventory_app
+    build: . # Directory of Dockerfile
+    ports:
+      - 127.0.0.1:8000:8000
+    working_dir: /app
+    volumes:
+      - .:/app # Folder of the app in host: workdir docker
+    environment:
+      - DJANGO_DEBUG=false
+      - DBHOST=inventory_db # Same name as db service
+      - DBPORT=5432
+    depends_on:
+      - inventory_db
+    restart: unless-stopped
+  #! app Database Service
+  inventory_db:
+    container_name: inventory_db
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER} # Uses the .env composer example or ${DBUSER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - app_data:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5433:5432
+    restart: unless-stopped
+  
+  # Other services like Nginx, Redis for cache and RabbitMQ
+  nginx:
+    image: nginx
+    container_name: nginx_service
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/var/www/static
+    ports:
+      - 127.0.0.1:4000:80
+  
+  redis:
+    container_name: redis_service
+    image: redis:7.2.4-alpine
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:6379:6379
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
+  
+
+volumes:
+  app_data: {}
+  static: {}
+  redis_data: {}
