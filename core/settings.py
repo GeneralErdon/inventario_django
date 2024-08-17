@@ -113,6 +113,7 @@ THIRD_PARTY_APPS = [
 MY_APPS = [
     "core",
     "apps.base",
+    "apps.users",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
@@ -210,7 +211,7 @@ MEDIA_ROOT = BASE_DIR / "media_root"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+AUTH_USER_MODEL = 'users.User'
 
 if not DEBUG:
     ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
