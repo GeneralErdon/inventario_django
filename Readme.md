@@ -2,10 +2,12 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 
 # Tabla de contenidos
 
-| Contenido                 | Link                                     |
-| ------------------------- | ---------------------------------------- |
-| Requisitos de instalación | [Requisitos](#Requisitos)                |
-| Instalación               | [Instalacion](#Instalación)              |
+| Contenido                 | Link                        |
+| ------------------------- | --------------------------- |
+| Requisitos de instalación | [Requisitos](#Requisitos)   |
+| Instalación               | [Instalacion](#Instalación) |
+| Ejecutar Tests            | ...                         |
+| Probar endpoints          | ...                         |
 
 ---
 
@@ -31,6 +33,7 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 > Docker: `docker --version`
 > Docker Compose: `docker compose version`
 
+---
 # Instalación
 ### Descarga del repositorio
 Primero se debe clonar el repositorio en un directorio, puedes ejecutar el siguiente comando en tu terminal
@@ -65,7 +68,7 @@ pip install -r requirements.txt
 cat example.env > .env
 ```
 
-> [!IMPORTANT] Nombre del archivo
+> [!IMPORTANT] 
 > Es importante que el archivo de las variables de entorno se encuentre en el directorio raíz del proyecto y que tenga el nombre de ".env"
 
 6. Crear la base de datos del servicio, se debe acceder a postgreSQL y crear una base de datos con el mismo nombre que se encuentre en el ".env" del proyecto en la llave "POSTGRES_DB" 
@@ -107,4 +110,6 @@ cat example.env > .env
 ```sh
 docker compose up -d
 ```
-4. Esperar que se terminen de crear las imágenes y ya estarán funcionales, el enrutador (Nginx) estará montado por defecto para `localhost:4000` a partir de allí se podrán ejecutar las peticiones.
+3. Esperar que se terminen de crear las imágenes y ya estarán funcionales, el enrutador (Nginx) estará montado por defecto para `localhost:4000` a partir de allí se podrán ejecutar las peticiones.
+
+---
