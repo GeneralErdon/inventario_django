@@ -77,7 +77,7 @@ cat example.env > .env
 CREATE DATABASE inventory_db WITH OWNER [Insertar aca USERNAME]
 ```
 
-> [!TIP] Otra opción
+> [!TIP] 
 > Otra opción para la base de datos es instanciarla en Docker con el simple comando de 
 > ``` bash
 > docker compose up -d inventory_db
@@ -89,7 +89,7 @@ CREATE DATABASE inventory_db WITH OWNER [Insertar aca USERNAME]
 python manage.py migrate
 ```
 
-> [!TIP] Usuario inicial
+> [!TIP] 
 > Por defecto al realizar la primera migración se creará un super usuario por defecto con las credenciales de username: admin, password: admin
 
 8. Ahora se puede iniciar el programa con el comando del servidor integrado de Django
@@ -103,7 +103,7 @@ python manage.py runserver
 cat example.env > .env
 ```
 
-> [!IMPORTANT] Nombre del archivo
+> [!IMPORTANT] 
 > Es importante que el archivo de las variables de entorno se encuentre en el directorio raíz del proyecto y que tenga el nombre de ".env"
 
 2. Ejecutar el siguiente comando para montar todas las imágenes 
