@@ -15,7 +15,13 @@ class ProductViewSet(GenericModelViewset):
         "supplier"
     ]
     
+    # Se puede filtrar mediante el Query Param de ?search=
+    # Los campos de Name, por identificación del proveedor, codigo de producto
+    # nombre de las categorías también.
+    # Ejemplo: localhost:8000/productos/producto/?search=carne
     search_fields = [
         "name",
+        "code",
         "supplier__identification",
+        "categories__name",
     ]

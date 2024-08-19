@@ -4,24 +4,24 @@ from django.conf import settings
 from django.conf.urls.static import static
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from drf_yasg.generators import OpenAPISchemaGenerator
 from rest_framework import permissions
 from rest_framework.authentication import BasicAuthentication
+from apps.base.openapi import CustomSchemaGenerator
 from apps.users.views import Login, Logout
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Authentication API",
-        default_version="v0.1.11032024",
+        title="Django Inventory API",
+        default_version="v1.0",
         description="""
-        Swagger documentation about the Auth API with JWT Token
+        Swagger documentation made by Leandro Fermin
         """,
         terms_of_service=None,
         contact=openapi.Contact(name="Leandro Fermín", email="leandrofermin@gmail.com"),
     ),
     public=True,
-    generator_class=OpenAPISchemaGenerator,
+    generator_class=CustomSchemaGenerator,
     permission_classes=[permissions.IsAdminUser],
     authentication_classes=[BasicAuthentication]
 )

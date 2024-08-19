@@ -70,6 +70,24 @@ class Supplier(BaseModel):
 
 class Product(BaseModel):
     
+    
+    MEASUREMENT_LIBRAS = "LB"
+    MEASUREMENT_GRAMOS = "GR"
+    MEASUREMENT_KILOS = "KG"
+    MEASUREMENT_LITROS = "LT"
+    MEASUREMENT_MILILITROS = "ML"
+    MEASUREMENT_UNIDAD = "UD"
+    MEASUREMENT_PAQUETE = "PQ"
+    
+    
+    code = models.CharField(
+        verbose_name="Código",
+        help_text="Código del producto.",
+        max_length=50,
+        unique=True,
+        db_index=True,
+    )
+    
     name = models.CharField(
         verbose_name="Nombre",
         help_text="Nombre del producto",
@@ -96,10 +114,27 @@ class Product(BaseModel):
         max_digits=20,
     )
     
-    quantity = models.IntegerField(
+    quantity = models.DecimalField(
         verbose_name="Cantidad",
         help_text="Cantidad disponible o almacenada del producto en el inventario",
+        max_digits=20,
+        decimal_places=2,
         default=0
+    )
+    
+    measurement = models.CharField(
+        verbose_name="Unidad de medida",
+        help_text="Unidad de medida para la cantidad. Ej. Gramos, Libras, Litros, Unidades, etc.",
+        max_length=2,
+        choices=(
+            (MEASUREMENT_LIBRAS, "LIBRAS"),
+            (MEASUREMENT_GRAMOS, "GRAMOS"),
+            (MEASUREMENT_KILOS, "KILOGRAMOS"),
+            (MEASUREMENT_LITROS, "LITROS"),
+            (MEASUREMENT_MILILITROS, "MILILITROS"),
+            (MEASUREMENT_UNIDAD, "UNIDAD"),
+            (MEASUREMENT_PAQUETE, "PAQUETE"),
+        ),
     )
     
     # Relaciones

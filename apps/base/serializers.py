@@ -6,7 +6,7 @@ from apps.base.models import BaseModel
 
 
 class BaseReadOnlySerializer(serializers.ModelSerializer):
-    """Read Only serializer that formats the audit datetime fields of the database
+    """Read Only serializer that applies read only to all fields for improve serialization and formats dates
     """
     created_date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S", read_only=True)
     modified_date = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S", read_only=True)

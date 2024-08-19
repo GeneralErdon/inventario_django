@@ -55,12 +55,12 @@ SWAGGER_SETTINGS = {
 }
 
 SIMPLE_JWT = {
-    # 'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),  
-    # 'REFRESH_TOKEN_LIFETIME': timedelta(hours=24),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=24),
 
     # 'ROTATE_REFRESH_TOKENS': True,
     # 'BLACKLIST_AFTER_ROTATION': True,
-    # 'UPDATE_LAST_LOGIN': True,
+    'UPDATE_LAST_LOGIN': True,
     # Default alghorithm and Signing Key specification
     'SIGNING_KEY': env.str("DJANGO_JWT_SIGNING_KEY"),
     "ALGORITHM": "HS256",
