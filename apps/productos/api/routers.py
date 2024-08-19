@@ -5,8 +5,8 @@ from apps.productos.api.viewsets.proveedores_viewsets import SupplierViewSet
 
 router = CustomRouter()
 # añadir rutas
-router.register(r'producto', ProductViewSet, basename="product-viewset")
-router.register(r'proveedor', SupplierViewSet, basename="supplier-viewset")
-router.register(r'categoria', CategoryViewSet, basename="category-viewset")
+router.register(r'product', ProductViewSet, basename="product-viewset")
+router.register(r'supplier', SupplierViewSet, basename="supplier-viewset")
+router.register(r'category', CategoryViewSet, basename="category-viewset")
 
 urlpatterns = router.urls

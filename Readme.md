@@ -114,3 +114,25 @@ docker compose up -d
 3. Esperar que se terminen de crear las imágenes y ya estarán funcionales, el enrutador (Nginx) estará montado por defecto para `localhost:4000` a partir de allí se podrán ejecutar las peticiones.
 
 ---
+
+# Probar endpoints
+Para probar los endpoints se requiere una manera de realizar peticiones al servidor una vez iniciado, para ello se recomienda tener herramientas como Postman, Thunderclient (en VSCode), o utilizar el comando "curl" en la terminal de Linux.
+
+Para una información más detallada de los endpoints existentes y sus métodos disponibles puede acceder a la documentación automática de Swagger con los endpoints de `/swagger`o `/redoc`.
+
+
+> [!NOTE] 
+> Un endpoint es la ruta que se encuentra en la URL que dicta a qué parte del servidor irán dirigidos los datos, por ejemplo: `http:localhost:8000/productos/product` el endpoint sería `/productos/product`.
+
+Cada endpoint del CRUD para algún modelo siempre tienen la siguiente estructura: `/app_name/model_name` por ejemplo la app de "productos" que contiene los modelos relacionados a los productos, como los proveedores y las categorías.
+
+Para utilizar los filtros más sofisticados se utilizan los `Query Params` en la URL, con el mismo formato que se utiliza para realizar los queries en Django, por ejemplo para revisar por rango de precios se podría utilizar `/productos/product?price__lte=3.0&price__gte=0.0`
+
+> [!NOTE] 
+> Para más información acerca del Lookup de Django puede revisar el siguiente [Enlace](https://www.w3schools.com/django/django_queryset_filter.php)
+
+
+Si se añade un `exclude=` antes del filtro, entonces se va a excluir los elementos allí presentes, por ejemplo un filtro para excluir todos los Productos que utilicen Gramos en su unidad de medida: `productos/product?exclude=measurement=GR` o para excluir todos los elementos desactivados o eliminados: `productos/product?exclude=status=false`
+
+> [!NOTE]
+> Todos los elementos son eliminados de manera lógica mediante la propiedad "status", donde True es Activo, y False es Eliminado o desactivado, para no eliminarlos de manera física de la base de datos.
