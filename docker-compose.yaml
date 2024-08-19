@@ -23,7 +23,7 @@ services:
     image: postgres:16
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER} # Uses the .env composer example or ${DBUSER}
+      - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - app_data:/var/lib/postgresql/data

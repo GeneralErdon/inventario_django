@@ -1,8 +1,7 @@
 from apps.base.viewsets.viewsets_generics import GenericModelViewset
-from apps.base.viewsets.viewset_mixins import ReportViewMixin
 from apps.users.api.serializers.user_serializers import UserReadOnlySerializer, UserSerializer
 
-class UserModelViewset(ReportViewMixin, GenericModelViewset):
+class UserModelViewset( GenericModelViewset):
     serializer_class = UserSerializer
     read_only_serializer = UserReadOnlySerializer
     search_fields = [

@@ -19,7 +19,7 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 | Docker (opcional)                | 27.1.2 (lastest) |
 | Docker-compose (plugin opcional) | 2.29.1 (lastest) |
 
-> [!TIP] Descargas
+> [!TIP] 
 > Para la descarga de los requisitos puede ayudarse de los siguientes enlaces: [Docker](https://docs.docker.com/engine/install) [Docker Linux Post-Install](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) [Python (Windows)](https://www.python.org/downloads/release/python-3119/)
 > Para descargar python en Linux utilizar el respectivo comando del manager de instalación de la distribución.
 >  Fedora: `sudo dnf install python3.11`
@@ -27,7 +27,7 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 >  Ubuntu o Debian based distro: `sudo apt install python3.11`
 
 
-> [!TIP] Visualizar version
+> [!TIP] 
 > Para visualizar su versión de cada requisito puede ejecutar los siguientes comandos: 
 > Python: `python --version` o `python3 --version` o `python3.11 --version` (en caso de tener varias versiones instaladas)
 > Docker: `docker --version`
@@ -38,7 +38,7 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 ### Descarga del repositorio
 Primero se debe clonar el repositorio en un directorio, puedes ejecutar el siguiente comando en tu terminal
 ```bash
-git clone https://github.com/GeneralErdon/inventory_django.git
+git clone https://github.com/GeneralErdon/inventario_django.git
 ```
 
 > [!NOTE]
@@ -49,7 +49,7 @@ Primero que nada hay que descargar las dependencias y paquetes necesarios para q
 
 1. Entrar en el directorio utilizando la terminal
 ```bash
-cd inventory_django
+cd inventario_django
 ```
 2. Crear el entorno virtual de python con el comando:
 ```bash
@@ -82,6 +82,7 @@ CREATE DATABASE inventory_db WITH OWNER [Insertar aca USERNAME]
 > ``` bash
 > docker compose up -d inventory_db
 > ```
+> Y cambiar la configuración de POSTGRES_PORT a la 5433 (colocado así para que no haga conflicto con el postgres que esté instalado nativo en el equipo)
 
 
 7. ejecutar las migraciones de Django una vez ya se haya configurado el usuario y contraseña en el archivo **".env"** en las llaves POSTGRES_PASSWORD y POSTGRES_USER, las migraciones crearán las tablas y relaciones correspondientes.

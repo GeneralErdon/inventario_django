@@ -10,13 +10,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from apps.users.api.serializers.token_obtain import CustomTokenObtainPairSerializer
 from apps.users.api.serializers.user_serializers import UserReadOnlySerializer, UserSerializer
 from apps.users.models import User
-
 # Create your views here.
+
+
+
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
     def post(self, request: Request, *args, **kwargs) -> Response:
-        """Codigo de autenticación de usuarios y generación de tokens.
+        """autenticación de usuarios y generación de tokens.
         Si el usuario está correctamente autenticado, se serializará la info del usuario
         se activará la sesión de usuario y se responderá con tokens de autenticación JWT y de refresh
 
@@ -54,6 +56,11 @@ class Logout(generics.GenericAPIView):
     
     
     def delete_all_sessions(self, user:User) -> None:
+        """Elimina todas las sesiones del usuario suministrado
+
+        Args:
+            user (User): Usuario al que se le eliminarán las sesiones.
+        """
         all_sessions = Session.objects.filter(expire_date__gte=datetime.now())
         if all_sessions.exists():
             for session in all_sessions:
