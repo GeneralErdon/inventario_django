@@ -93,7 +93,11 @@ python manage.py migrate
 > [!TIP] 
 > Por defecto al realizar la primera migración se creará un super usuario por defecto con las credenciales de username: admin, password: admin
 
-8. Ahora se puede iniciar el programa con el comando del servidor integrado de Django
+8. Instalar Redis para activar el cache del servidor, el archivo de configuración debe tener DJANGO_ACTIVE_CACHE=True para que utilice el Cache, en caso contrario que no se desee utilizar Cache, colocar en False. Importante configurar la ruta a un servicio Redis en la configuración en caso de tener Cache, o sino también puede instanciar el contenedor de Redis pre configurado en el docker, puede utilizar el siguiente comando:
+```bash
+docker compose up -d redis
+```
+9. Ahora se puede iniciar el programa con el comando del servidor integrado de Django
 ```bash
 python manage.py runserver
 ```
@@ -136,3 +140,6 @@ Si se añade un `exclude=` antes del filtro, entonces se va a excluir los elemen
 
 > [!NOTE]
 > Todos los elementos son eliminados de manera lógica mediante la propiedad "status", donde True es Activo, y False es Eliminado o desactivado, para no eliminarlos de manera física de la base de datos.
+
+
+Para poder verificar la cantidad de Queries a la base de datos por petición, se debe revisar los Headers del Response, siempre que la configuración del Django se encuentre en `DJANGO_DEBUG=True` aparecerá en los headers de la respuesta del servidor las llamadas a caché
