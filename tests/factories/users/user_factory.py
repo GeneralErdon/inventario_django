@@ -1,13 +1,10 @@
-
-
-from faker import Faker
+from apps.base.tests import BaseFactory
 from apps.users.models import User
 
-class UsersFactory:
-    faker = Faker()
+class UsersFactory(BaseFactory):
+    model = User
     
-    
-    def get_user_json(self) -> dict[str, str]:
+    def get_json(self) -> dict[str, str]:
         f_name = self.faker.first_name().lower()
         l_name = self.faker.last_name().lower()
         
@@ -19,15 +16,3 @@ class UsersFactory:
             "is_superuser": False,
         }
     
-    def create_bulk_users(self, count:int) -> list[User]:
-        users = [ User(**self.get_user_json()) for _ in range(count) ]
-        return User.objects.bulk_create(users)
-    
-    def create_user(self, **extrafields) -> User:
-        data = self.get_user_json()
-        data = {
-            **data,
-            **extrafields,
-        }
-        
-        return User.objects.create_user(**data)

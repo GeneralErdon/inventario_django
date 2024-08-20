@@ -30,7 +30,15 @@ class TestSetup(APITestCase):
         return super().setUp()
     
     def getToken(self, username: str, password:str = "developer") -> str:
-        
+        """Obtiene el token realizando una peticion interna a la vista de Login
+
+        Args:
+            username (str): Username al que se sacará el token
+            password (str, optional): Contraseña. Defaults to "developer".
+
+        Returns:
+            str: Token de acceso
+        """
         response = self.client.post(
             path=self.LOGIN_ENDPOINT,
             data={

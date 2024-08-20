@@ -115,6 +115,19 @@ class Implementations(
         
         return cache_key
     
+    def get_cache_data(self, cache_key:str) -> Any | None:
+        """Método para la obtención de los datos del sistema de Cache.
+        Si retorna None, entonces no encontró datos o el caché no está activo.
+
+        Args:
+            cache_key (str): Llave del contenido en el cache
+
+        Returns:
+            Any | None: Data si hay contenido, None si no encontró nada
+        """
+        if not settings.ACTIVE_CACHE: return None
+        return cache.get(cache_key, None)
+    
     def get_cache_pattern(self) -> str:
         """Función para obtener el patrón de cacheado del que 
         se van a extraer las llaves coincidentes
@@ -180,15 +193,11 @@ class RetrieveObjectMixin(
     # Caching de low level agregado a la data serializada
     def retrieve(self, request, pk:str, *args, **kwargs):
         cache_key:str = self.get_cache_key(request=request)
-        if settings.ACTIVE_CACHE and cache_key in cache:
-            #* El cache completo ya se limpia en el save() del modelo
-            # Se activa sólo si el settings tiene el ACTIVE_CACHE True
-            # la llave existe en el cache
-            
-            # retornar el contenido cacheado
-            serialized_cache_data = cache.get(cache_key)
-            
+        # Verifica primero si hay Cache
+        serialized_cache_data = self.get_cache_data(cache_key)
+        if serialized_cache_data:
             return self.get_ok_response(serialized_cache_data)
+        
 
         obj:QuerySet|None = self.get_queryset().filter(pk=pk).first()
 
@@ -317,15 +326,9 @@ class ListObjectMixin(
     def list(self, request:Request, *args, **kwargs):
         cache_key:str = self.get_cache_key(request=request)
         
-        if settings.ACTIVE_CACHE and cache_key in cache:
-            #* El cache completo ya se limpia en el save() del modelo
-            # Se activa sólo si el settings tiene el ACTIVE_CACHE True
-            # la llave existe en el cache
-            
-            # retornar el contenido cacheado
-            # La misma estructura de la paginación
-            serialized_cache_data = cache.get(cache_key)
-            
+        # Verifica primero si hay Cache
+        serialized_cache_data = self.get_cache_data(cache_key)
+        if serialized_cache_data:
             return self.get_ok_response(serialized_cache_data)
 
         
@@ -339,8 +342,6 @@ class ListObjectMixin(
             
             if settings.ACTIVE_CACHE:
                 # Se activa sólo si el settings tiene el ACTIVE_CACHE True
-                # No importa llamar dos veces serializer.data porque el serializador usa cache tambn
-                # para multiples llamadas al .data
                 
                 response_data = paginated_response.data # Get the paginated response data dict
                 cache.set(cache_key, response_data, settings.CACHE_LIFETIME)

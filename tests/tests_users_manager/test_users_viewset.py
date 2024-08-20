@@ -12,7 +12,7 @@ class UsersTestCase(TestSetup):
     
     
     def test_list_users(self):
-        UsersFactory().create_bulk_users(252)
+        UsersFactory().create_bulk(252)
         
         response = self.client.get(
             path=self.ENDPOINT 
@@ -24,7 +24,7 @@ class UsersTestCase(TestSetup):
     
     def test_retrieve_users(self):
         
-        user:User = UsersFactory().create_user()
+        user:User = UsersFactory().create()
         
         response: Response = self.client.get(
             self.ENDPOINT + f"{user.id}/"
@@ -37,7 +37,7 @@ class UsersTestCase(TestSetup):
     
     def test_create_users(self):
         
-        user_json:dict = UsersFactory().get_user_json()
+        user_json:dict = UsersFactory().get_json()
         
         response: Response = self.client.post(
             self.ENDPOINT,
@@ -55,7 +55,7 @@ class UsersTestCase(TestSetup):
     
     def test_update_users(self):
         
-        user:User = UsersFactory().create_user()
+        user:User = UsersFactory().create()
         new_first_name = "LeandroFERMINAAA"
         
         self.assertNotEqual(user.first_name, new_first_name)
