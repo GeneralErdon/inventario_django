@@ -37,15 +37,24 @@ CORS_ORIGIN_WHITELIST = CORS_ALLOWED_ORIGINS
 
 ACTIVE_CACHE = env.bool("DJANGO_ACTIVE_CACHE", True)
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env.str("REDIS_HOST"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+if env.str("DJANGO_CACHE_BACKEND").upper() == "FILES":
+    CACHES = {
+        "default": {
+            "BACKEND":"django.core.cache.backends.filebased.FileBasedCache",
+            "LOCATION": Path(BASE_DIR, "django_cache").resolve()
         }
     }
-}
+else:
+
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": env.str("REDIS_HOST"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
 
 CACHE_LIFETIME = 60 * 15 # in seconds
 

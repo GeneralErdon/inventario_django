@@ -12,8 +12,9 @@ services:
       - .:/app # Folder of the app in host: workdir docker
     environment:
       - DJANGO_DEBUG=false
-      - DBHOST=inventory_db # Same name as db service
-      - DBPORT=5432
+      - POSTGRES_HOST=inventory_db # Same name as db service
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis://redis_service:6379/0
     depends_on:
       - inventory_db
     restart: unless-stopped
