@@ -63,6 +63,10 @@ source env/bin/activate
 ```sh 
 pip install -r requirements.txt 
 ```
+
+> [!IMPORTANT] 
+> En el caso de Windows, es importante aclarar que es posible que se tenga que modificar una linea del `requirements.txt`, la librería "psycopg2-binary" cambiarla a simplemente "psycopg2", ya que la versión binary es la que se utiliza en Linux.
+
 5. Realizar la configuración inicial de las variables de entorno, en el directorio del proyecto  hay un archivo llamado  **example.env**, haz un archivo .env usandolo como plantilla, puedes utilizar el comando a continuación para hacer una copia
 ```sh 
 cat example.env > .env
@@ -91,9 +95,9 @@ python manage.py migrate
 ```
 
 > [!TIP] 
-> Por defecto al realizar la primera migración se creará un super usuario por defecto con las credenciales de username: admin, password: admin
+> Por defecto al realizar la primera migración se creará un super usuario por defecto con las credenciales de `username: admin, password: admin`
 
-8. Instalar Redis para activar el cache del servidor, el archivo de configuración debe tener DJANGO_ACTIVE_CACHE=True para que utilice el Cache, en caso contrario que no se desee utilizar Cache, colocar en False. Importante configurar la ruta a un servicio Redis en la configuración en caso de tener Cache, o sino también puede instanciar el contenedor de Redis pre configurado en el docker, puede utilizar el siguiente comando:
+8. Instalar Redis para activar el cache del servidor, el archivo de configuración debe tener `DJANGO_ACTIVE_CACHE=True` para que utilice el Cache, en caso contrario que no se desee utilizar Cache, colocar en False. Importante configurar la ruta a un servicio Redis en la configuración en caso de tener Cache, o sino también puede instanciar el contenedor de Redis pre configurado en el docker, puede utilizar el siguiente comando:
 ```bash
 docker compose up -d redis
 ```
