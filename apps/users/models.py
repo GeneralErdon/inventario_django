@@ -26,6 +26,7 @@ class User(AbstractUser):
         upload_to=user_media,
         )
     
+    deactivated_status = False
     
     def __str__(self) -> str:
         return self.username

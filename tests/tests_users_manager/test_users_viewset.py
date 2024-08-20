@@ -12,7 +12,7 @@ class UsersTestCase(TestSetup):
     
     
     def test_list_users(self):
-        UsersFactory().create_bulk(252)
+        UsersFactory().create_bulk(200)
         
         response = self.client.get(
             path=self.ENDPOINT 
@@ -56,7 +56,7 @@ class UsersTestCase(TestSetup):
     def test_update_users(self):
         
         user:User = UsersFactory().create()
-        new_first_name = "LeandroFERMINAAA"
+        new_first_name = "LeandroFERMIN"
         
         self.assertNotEqual(user.first_name, new_first_name)
         
@@ -68,8 +68,22 @@ class UsersTestCase(TestSetup):
             content_type="application/json"
         )
         
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
         self.assertEqual(response.data["first_name"], new_first_name)
         
         self.Messages.ok("TEST UPDATE USERS 1 OK")
     
+    
+    def test_delete_users(self):
+        user = UsersFactory().create()
+        
+        response = self.client.delete(
+            path=self.ENDPOINT + f"{user.pk}/",
+        )
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        user = User.objects.filter(is_active=False, pk=user.pk).first()
+        self.assertNotEqual(user, None,)
+        self.assertFalse(user.is_active)
+        
+        self.Messages.ok("TEST DELETE USERS 1 OK")

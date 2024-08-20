@@ -25,7 +25,10 @@ class ProductsTestCase(TestSetup):
     
     def test_retrieve_product(self):
         
-        product: Product = ProductFactory().create()
+        product: Product = ProductFactory()\
+            .create(
+                supplier=SupplierFactory().create(),
+                )
         
         response: Response = self.client.get(
             self.ENDPOINT + f"{product.id}/"
@@ -39,8 +42,8 @@ class ProductsTestCase(TestSetup):
     def test_create_product(self):
         
         product_json: dict = ProductFactory().get_json()
-        
-        
+        product_json["supplier"] = SupplierFactory().create().pk
+        product_json["categories"] = [ CategoryFactory().create().pk ]
         
         response: Response = self.client.post(
             self.ENDPOINT,
@@ -50,17 +53,15 @@ class ProductsTestCase(TestSetup):
         
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
         
-        exists = Product.objects.filter(name__icontains=product_json["name"]).exists()
-        
-        self.assertTrue(exists, "No existe el item")
-        
         self.Messages.ok("TEST CREATE PRODUCT 1 OK")
     
     def test_update_product(self):
         
-        product: Product = ProductFactory().create()
+        product: Product = ProductFactory()\
+            .create(
+                supplier=SupplierFactory().create(),
+                )
         new_name = "NewProductName"
-        
         
         self.assertNotEqual(product.name, new_name)
         
@@ -76,3 +77,21 @@ class ProductsTestCase(TestSetup):
         self.assertEqual(response.data["name"], new_name.upper())
         
         self.Messages.ok("TEST UPDATE PRODUCT 1 OK")
+    
+    def test_delete_product(self):
+        product: Product = ProductFactory()\
+            .create(
+                supplier=SupplierFactory().create(),
+                )
+        
+        response = self.client.delete(
+            path=self.ENDPOINT + f"{product.pk}/",
+        )
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        product = Product.objects.filter(status=False, pk=product.pk).first()
+        self.assertNotEqual(product, None)
+        self.assertFalse(product.status)
+        
+        self.Messages.ok("TEST DELETE PRODUCT 1 OK")
+

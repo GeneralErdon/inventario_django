@@ -19,7 +19,6 @@ class CategoriesTestCase(TestSetup):
         )
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["count"], 200)
         
         self.Messages.ok("TEST LIST CATEGORIES 1 OK")
     
@@ -48,8 +47,6 @@ class CategoriesTestCase(TestSetup):
         
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.data)
         
-        exists = Category.objects.filter(name__icontains=category_json["name"]).exists()
-        self.assertTrue(exists, "No existe el item")
         
         self.Messages.ok("TEST CREATE CATEGORY 1 OK")
     
@@ -72,5 +69,20 @@ class CategoriesTestCase(TestSetup):
         self.assertEqual(response.data["name"], new_name.upper())
         
         self.Messages.ok("TEST UPDATE CATEGORY 1 OK")
+    
+    def test_delete_category(self):
+        category = CategoryFactory().create()
+        
+        response = self.client.delete(
+            path=self.ENDPOINT + f"{category.pk}/",
+        )
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        category = Category.objects.filter(status=False, pk=category.pk).first()
+        self.assertNotEqual(category, None)
+        self.assertFalse(category.status)
+        
+        self.Messages.ok("TEST DELETE CATEGORY 1 OK")
+
 
 

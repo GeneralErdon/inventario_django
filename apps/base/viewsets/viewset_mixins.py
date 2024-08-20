@@ -431,6 +431,7 @@ class DestroyObjectMixin(
     def destroy(self, request:Request, pk:str, *args, **kwargs):
         excludes = {self.get_status_field():self.get_deleted_status()}
 
+        # Excluyo si ya está desactivado
         obj:Model|None = self.get_queryset().filter(pk=pk).exclude(**excludes).first()
         if obj is not None:
             # set the attribute of the status to the deleted value

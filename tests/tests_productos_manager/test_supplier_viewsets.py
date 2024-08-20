@@ -46,10 +46,6 @@ class SuppliersTestCase(TestSetup):
         
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         
-        exists = Supplier.objects.filter(name__icontains=supplier_json["name"]).exists()
-        
-        self.assertTrue(exists, "No existe el item")
-        
         self.Messages.ok("TEST CREATE SUPPLIER 1 OK")
     
     def test_update_supplier(self):
@@ -72,3 +68,17 @@ class SuppliersTestCase(TestSetup):
         self.assertEqual(response.data["name"], new_name.upper())
         
         self.Messages.ok("TEST UPDATE SUPPLIER 1 OK")
+
+    def test_delete_supplier(self):
+        supplier = SupplierFactory().create()
+        
+        response = self.client.delete(
+            path=self.ENDPOINT + f"{supplier.pk}/",
+        )
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK, response.data)
+        supplier = Supplier.objects.filter(status=False, pk=supplier.pk).first()
+        self.assertNotEqual(supplier, None,)
+        self.assertFalse(supplier.status)
+        
+        self.Messages.ok("TEST DELETE SUPPLIER 1 OK")

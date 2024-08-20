@@ -16,3 +16,6 @@ class UserModelViewset( GenericModelViewset):
         "logentry_set__content_type"
     ]
     
+    def get_status_field(self) -> str: 
+        # la propiedad del estado del usuario es is_active, define si está activo o inactivo
+        return "is_active"
