@@ -63,6 +63,7 @@ SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none'
 }
 
+# Configuración del token de autenticación
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),  
     'REFRESH_TOKEN_LIFETIME': timedelta(hours=24),
@@ -81,8 +82,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.permissions.DjangoModelPermissions'
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions'
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.SearchFilter',
@@ -92,8 +93,7 @@ REST_FRAMEWORK = {
 }
 
 # Shows Debug toolbar
-#? returns the DEBUG because the test case cause problems
-# all test case are runned in DEBUG false
+# all test case are ran in DEBUG false
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: settings.DEBUG,
 }
