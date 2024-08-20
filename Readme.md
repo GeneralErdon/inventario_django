@@ -6,8 +6,8 @@ El presente proyecto es para la demostración de la prueba técnica de Django Re
 | ------------------------- | --------------------------- |
 | Requisitos de instalación | [Requisitos](#Requisitos)   |
 | Instalación               | [Instalacion](#Instalación) |
-| Ejecutar Tests            | ...                         |
-| Probar endpoints          | ...                         |
+| Ejecutar Tests            | [Testing](#tests)           |
+| Probar endpoints          | [Endpoints](#Endpoints)     |
 
 ---
 
@@ -109,7 +109,7 @@ cat example.env > .env
 ```
 
 > [!IMPORTANT] 
-> Es importante que el archivo de las variables de entorno se encuentre en el directorio raíz del proyecto y que tenga el nombre de ".env"
+> Es importante que el archivo de las variables de entorno se encuentre en el directorio raíz del proyecto y que tenga el nombre de ".env" 
 
 2. Ejecutar el siguiente comando para montar todas las imágenes 
 ```sh
@@ -119,7 +119,7 @@ docker compose up -d
 
 ---
 
-# Probar endpoints
+# Endpoints
 Para probar los endpoints se requiere una manera de realizar peticiones al servidor una vez iniciado, para ello se recomienda tener herramientas como Postman, Thunderclient (en VSCode), o utilizar el comando "curl" en la terminal de Linux.
 
 Para una información más detallada de los endpoints existentes y sus métodos disponibles puede acceder a la documentación automática de Swagger con los endpoints de `/swagger`o `/redoc`.
@@ -143,3 +143,18 @@ Si se añade un `exclude=` antes del filtro, entonces se va a excluir los elemen
 
 
 Para poder verificar la cantidad de Queries a la base de datos por petición, se debe revisar los Headers del Response, siempre que la configuración del Django se encuentre en `DJANGO_DEBUG=True` aparecerá en los headers de la respuesta del servidor las llamadas a caché
+
+---
+# Tests
+Para poder ejecutar los tests **manualmente** se debe seguir el tutorial de [Instalación manual](#Instalación) y con el entorno virtual de python activado, ejecutar el comando:
+```bash
+python manage.py test tests
+```
+
+> [!NOTE]
+> Los archivos de Test se encuentran en un sub-directorio del directorio raíz con el nombre de "tests"
+
+En caso de haber instalado con Docker, los tests se pueden realizar ejecutando el sigueinte comando: 
+```
+docker exec -it inventory_app -c "python manage.py test tests"
+```
