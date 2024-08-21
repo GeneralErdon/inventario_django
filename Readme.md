@@ -160,5 +160,5 @@ python manage.py test tests
 
 En caso de haber instalado con Docker, los tests se pueden realizar ejecutando el sigueinte comando: 
 ```
-docker exec -it inventory_app -c "python manage.py test tests"
+docker exec -it inventory_app -c sh "python manage.py test tests"
 ```
