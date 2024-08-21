@@ -7,8 +7,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.openapi import Schema, Response as OpenApiResponse, TYPE_OBJECT, TYPE_STRING
 from apps.users.api.serializers.token_obtain import CustomTokenObtainPairSerializer
-from apps.users.api.serializers.user_serializers import UserReadOnlySerializer, UserSerializer
+from apps.users.api.serializers.user_serializers import UserReadOnlySerializer, UserSerializer, UserSwaggerResponseSerializer
 from apps.users.models import User
 # Create your views here.
 
@@ -17,6 +19,14 @@ from apps.users.models import User
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
+    
+    @swagger_auto_schema(
+        operation_description="Login",
+        request_body=CustomTokenObtainPairSerializer,
+        responses={
+            200: UserSwaggerResponseSerializer
+        }
+    )
     def post(self, request: Request, *args, **kwargs) -> Response:
         """autenticación de usuarios y generación de tokens.
         Si el usuario está correctamente autenticado, se serializará la info del usuario
@@ -44,7 +54,7 @@ class Login(TokenObtainPairView):
                 user_serializer = UserReadOnlySerializer(instance=user)
                 return Response({
                     "token": login_serializer.validated_data.get("access"),
-                    "refresh-token": login_serializer.validated_data.get("refresh"),
+                    "refresh_token": login_serializer.validated_data.get("refresh"),
                     "user": user_serializer.data,
                 })
         return Response(

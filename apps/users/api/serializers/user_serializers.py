@@ -56,3 +56,8 @@ class UserSerializer(serializers.ModelSerializer):
             user_updated = self.set_user_password(user_updated, validated_data["password"])
         return user_updated
 
+
+class UserSwaggerResponseSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    refresh_token = serializers.CharField()
+    user = UserReadOnlySerializer()
